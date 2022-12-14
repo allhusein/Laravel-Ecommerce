@@ -26,7 +26,7 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ReviewController;
-
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +37,10 @@ use App\Http\Controllers\User\ReviewController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Artisan::call('migrate:rollback', ['--force' => true]);
+    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('db:seed', ['--force'=>true]);
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm']);
